@@ -3,13 +3,13 @@ sudo: required
 jdk: oraclejdk8
 
 before_cache:
- -rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
- -rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+ -rm -f $HOME/outlay/.gradle/caches/modules-2/modules-2.lock
+ -rm -fr $HOME/outlay/.gradle/caches/*/plugin-resolution/
 
 cache:
  directories:
- - $HOME/.gradle/caches/
- - $HOME/.gradle/wrapper/
+ - $HOME/outlay/.gradle/caches/
+ - $HOME/outlay/.gradle/wrapper/
 
 env:
  global:
@@ -34,7 +34,7 @@ android:
  - google-gdk-license-.+
 
 before_install:
-  - chmod +x gradlew
+  - chmod +x ./outlay/gradlew
 
 notifications:
   email: false
@@ -46,6 +46,6 @@ notifications:
 #  - adb shell input keyevent 82 &
 
 script:
-- ./gradlew clean build -x test
+- ./outlay/gradlew clean build -x test
 #- ./gradlew test
 #- ./gradlew connectedAndroidTest
