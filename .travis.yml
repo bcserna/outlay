@@ -5,11 +5,11 @@ jdk:
  - oraclejdk8
 
 before_cache:
- -ls
- -ls $HOME
- -ls $HOME/outlay
- -rm -f $HOME/outlay/.gradle/caches/modules-2/modules-2.lock
- -rm -fr $HOME/outlay/.gradle/caches/*/plugin-resolution/
+- ls
+- ls $HOME
+- ls $HOME/outlay
+- rm -f $HOME/outlay/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/outlay/.gradle/caches/*/plugin-resolution/
 
 cache:
  directories:
