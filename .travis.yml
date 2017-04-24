@@ -1,6 +1,8 @@
 language: android
 sudo: required
-jdk: oraclejdk8
+jdk:
+ - oraclejdk7
+ - oraclejdk8
 
 before_cache:
  -rm -f $HOME/outlay/.gradle/caches/modules-2/modules-2.lock
@@ -34,6 +36,7 @@ android:
  - google-gdk-license-.+
 
 before_install:
+ - export JAVA7_HOME=/usr/lib/jvm/java-7-oracle
  - cd outlay
  - chmod +x gradlew
 
@@ -48,5 +51,5 @@ before_script:
 
 script:
 - ./gradlew clean build -x test
-#- ./gradlew test
+- ./gradlew test
 #- ./gradlew connectedAndroidTest
