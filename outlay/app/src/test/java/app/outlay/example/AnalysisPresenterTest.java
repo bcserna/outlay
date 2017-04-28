@@ -84,7 +84,7 @@ public class AnalysisPresenterTest {
     }
 
     @Test
-    public void getExpenses_DefaultSubscriber_ShowsAnalysis_OnNext_IfViewDetached() {
+    public void getExpenses_DefaultSubscriber_DoesntShowAnalysis_OnNext_IfViewDetached() {
         analysisPresenter.detachView(true);
         analysisPresenter.getExpenses(date, date, category);
 
