@@ -8,6 +8,7 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,9 +25,6 @@ import app.outlay.mvp.view.AnalysisView;
 @RunWith(MockitoJUnitRunner.class)
 public class AnalysisPresenterTest {
 
-    private AnalysisPresenter analysisPresenter;
-    private Date date;
-    private Category category;
 
     @Mock
     private GetCategoriesUseCase getCategoriesUseCaseMock;
@@ -43,12 +41,14 @@ public class AnalysisPresenterTest {
     @Captor
     private ArgumentCaptor<DefaultSubscriber<Report>> ReportSubscriberCaptor;
 
+    private AnalysisPresenter analysisPresenter;
+    private Date date = new Date();
+    private Category category = new Category();
+
     @Before
     public void init() {
         analysisPresenter = new AnalysisPresenter(getCategoriesUseCaseMock, getExpensesUseCaseMock);
         analysisPresenter.attachView(analysisViewMock);
-        date = new Date();
-        category = new Category();
     }
 
     @Test
@@ -61,10 +61,12 @@ public class AnalysisPresenterTest {
     @Test
     public void getCategories_DefaultSubscriber_SetsViewCategories_OnNext() {
         analysisPresenter.getCategories();
+        ArrayList<Category> testList = new ArrayList<>();
+        testList.add(new Category().setId("test"));
 
         verify(getCategoriesUseCaseMock).execute(CategoriesSubscriberCaptor.capture());
-        CategoriesSubscriberCaptor.getValue().onNext(any());
-        verify(analysisViewMock).setCategories(any());
+        CategoriesSubscriberCaptor.getValue().onNext(testList);
+        verify(analysisViewMock).setCategories(testList);
     }
 
     @Test

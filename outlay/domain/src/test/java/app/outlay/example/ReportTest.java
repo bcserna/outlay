@@ -18,18 +18,17 @@ import app.outlay.domain.model.Report;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+
 
 @RunWith(MockitoJUnitRunner.class)
 public class ReportTest {
 
-    private Report report;
-    private ArrayList<Expense> testExpenses;
+    private Report report = new Report();
+    private ArrayList<Expense> testExpenses = new ArrayList<>();
 
     @Before
     public void init() {
-        report = new Report();
-
-        testExpenses = new ArrayList<>();
         Expense expense1 = new Expense();
         expense1.setAmount(BigDecimal.valueOf(0));
         expense1.setCategory(new Category().setId("1"));
@@ -60,15 +59,14 @@ public class ReportTest {
             realAmount = realAmount.add(e.getAmount());
         BigDecimal calculatedAmount = report.getTotalAmount();
 
-        assertTrue(Objects.equals(calculatedAmount, realAmount));
+        assertEquals(calculatedAmount, realAmount);
     }
 
     @Test
     public void getTotalAmount_CalculatesCorrectAmount_IfNoExpenses() {
         BigDecimal totalAmount = report.getTotalAmount();
 
-        assertTrue(Objects.equals(totalAmount, BigDecimal.ZERO)
-                || Objects.equals(totalAmount, BigDecimal.valueOf(0.0)));
+        assertEquals(totalAmount, BigDecimal.ZERO);
     }
 
     @Test
@@ -82,14 +80,14 @@ public class ReportTest {
         Map<Category, Report> result = report.groupByCategory();
         int createdCategoryCount = result.keySet().size();
 
-        assertTrue(createdCategoryCount == realCategories.size());
+        assertEquals(createdCategoryCount, realCategories.size());
     }
 
     @Test
     public void groupByCategory_CreatesEmptyMap_IfNoExpense() {
         Map<Category, Report> result = report.groupByCategory();
 
-        assertTrue(result.keySet().size() == 0);
+        assertEquals(result.keySet().size(), 0);
     }
 
 }
