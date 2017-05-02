@@ -71,7 +71,7 @@ public class CategoriesPresenterTest {
 
         verify(getCategoriesUseCaseMock).execute(CategoriesSubscriberCaptor.capture());
         CategoriesSubscriberCaptor.getValue().onNext(categories);
-        verify(categoriesViewMock).showCategories(categories);
+        verify(categoriesViewMock).showCategories(eq(categories));
     }
 
     @Test

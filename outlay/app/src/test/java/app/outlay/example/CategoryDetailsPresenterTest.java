@@ -56,7 +56,7 @@ public class CategoryDetailsPresenterTest {
     public void getCategory_UsesGetCategoryUseCase(){
         categoryDetailsPresenter.getCategory(testString);
 
-        verify(getCategoryUseCaseMock).execute(any(), any());
+        verify(getCategoryUseCaseMock).execute(eq(testString), any());
     }
 
     @Test
@@ -65,21 +65,21 @@ public class CategoryDetailsPresenterTest {
 
         verify(getCategoryUseCaseMock).execute(any(), CategorySubscriberCaptor.capture());
         CategorySubscriberCaptor.getValue().onNext(category);
-        verify(categoryDetailsView).showCategory(category);
+        verify(categoryDetailsView).showCategory(eq(category));
     }
 
     @Test
     public void updateCategory_UsesSaveCategoryUseCase(){
         categoryDetailsPresenter.updateCategory(category);
 
-        verify(saveCategoryUseCaseMock).execute(any(), any());
+        verify(saveCategoryUseCaseMock).execute(eq(category), any());
     }
 
     @Test
     public void updateCategory_DefaultSubscriber_FinishesView_OnCompleted(){
         categoryDetailsPresenter.updateCategory(category);
 
-        verify(saveCategoryUseCaseMock).execute(any(),CategorySubscriberCaptor.capture() );
+        verify(saveCategoryUseCaseMock).execute(eq(category),CategorySubscriberCaptor.capture() );
         CategorySubscriberCaptor.getValue().onCompleted();
         verify(categoryDetailsView).finish();
     }
@@ -88,14 +88,14 @@ public class CategoryDetailsPresenterTest {
     public void deleteCategory_UsesSaveCategoryUseCase(){
         categoryDetailsPresenter.deleteCategory(category);
 
-        verify(deleteCategoryUseCaseMock).execute(any(), any());
+        verify(deleteCategoryUseCaseMock).execute(eq(category), any());
     }
 
     @Test
     public void deleteCategory_DefaultSubscriber_FinishesView_OnCompleted(){
         categoryDetailsPresenter.deleteCategory(category);
 
-        verify(deleteCategoryUseCaseMock).execute(any(),CategorySubscriberCaptor.capture() );
+        verify(deleteCategoryUseCaseMock).execute(eq(category),CategorySubscriberCaptor.capture() );
         CategorySubscriberCaptor.getValue().onCompleted();
         verify(categoryDetailsView).finish();
     }
