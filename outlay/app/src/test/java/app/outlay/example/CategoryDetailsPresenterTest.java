@@ -18,15 +18,12 @@ import org.mockito.junit.MockitoJUnitRunner;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
 
-/**
- * Created by MR.ESSIG on 5/2/2017.
- */
 @RunWith(MockitoJUnitRunner.class)
 public class CategoryDetailsPresenterTest {
 
     private CategoryDetailsPresenter categoryDetailsPresenter;
-    private String testString;
-    private Category category;
+    private String testString = "testString";
+    private Category category = new Category();
 
     @Mock
     private SaveCategoryUseCase saveCategoryUseCaseMock;
@@ -48,8 +45,11 @@ public class CategoryDetailsPresenterTest {
         categoryDetailsPresenter = new CategoryDetailsPresenter(saveCategoryUseCaseMock, deleteCategoryUseCaseMock, getCategoryUseCaseMock);
         categoryDetailsPresenter.attachView(categoryDetailsView);
 
-        testString = "";
-        category = new Category();
+        category.setColor(1);
+        category.setIcon("IconString");
+        category.setId("1");
+        category.setOrder(2);
+        category.setTitle("TestCategory");
     }
 
     @Test

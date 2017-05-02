@@ -18,17 +18,14 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
-/**
- * Created by MR.ESSIG on 5/2/2017.
- */
+
 @RunWith(MockitoJUnitRunner.class)
 public class CategoriesPresenterTest {
 
     private CategoriesPresenter categoriesPresenter;
-    private List<Category> categories;
+    private List<Category> categories = new ArrayList<>();
 
     @Mock
     private GetCategoriesUseCase getCategoriesUseCaseMock;
@@ -50,7 +47,15 @@ public class CategoriesPresenterTest {
     public void init(){
         categoriesPresenter = new CategoriesPresenter(getCategoriesUseCaseMock,updateCategoriesUseCaseMock);
         categoriesPresenter.attachView(categoriesViewMock);
-        categories = new ArrayList<>();
+
+        Category category = new Category();
+        category.setColor(1);
+        category.setIcon("IconString");
+        category.setId("1");
+        category.setOrder(2);
+        category.setTitle("TestCategory");
+
+        categories.add(category);
     }
 
     @Test
