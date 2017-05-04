@@ -61,7 +61,17 @@ public class LoginViewPresenterTest {
     }
 
     @Test
-    public void public_signIn(){
+    public void public_signIn_UsesUserSignInUseCase(){
+        loginViewPresenter.signIn(userEmail, userPassword);
+
+        //private signIn indirect test
+        verify(loginViewMock).setProgress(true);
+
+        verify(userSignInUseCaseMock).execute(any(),any());
+    }
+
+    @Test
+    public void public_signIn_DefaultSubscribe_OnNext(){
         loginViewPresenter.signIn(userEmail, userPassword);
 
         //private signIn indirect test
@@ -72,6 +82,15 @@ public class LoginViewPresenterTest {
 
         //private onAuthSuccess indirect test
         verify(loginViewMock).onSuccess(eq(user));
+    }
+
+    public void public_signIn_DefaultSubscribe_OnError(){
+        loginViewPresenter.signIn(userEmail, userPassword);
+
+        //private signIn indirect test
+        verify(loginViewMock).setProgress(true);
+
+        verify(userSignInUseCaseMock).execute(any(),UserSubscriberCaptor.capture());
 
         UserSubscriberCaptor.getValue().onError(e);
         verify(loginViewMock).setProgress(false);
@@ -88,7 +107,16 @@ public class LoginViewPresenterTest {
     }
 
     @Test
-    public void signUp_Test(){
+    public void signUp_UsesUserSignUpUseCase(){
+        loginViewPresenter.signUp(userEmail,userPassword);
+
+        verify(loginViewMock).setProgress(true);
+
+        verify(userSignUpUseCaseMock).execute(any(),any());
+    }
+
+    @Test
+    public void signUp_DefaultSubscribe_OnNext(){
         loginViewPresenter.signUp(userEmail,userPassword);
 
         verify(loginViewMock).setProgress(true);
@@ -98,6 +126,15 @@ public class LoginViewPresenterTest {
 
         //private onAuthSuccess indirect test
         verify(loginViewMock).onSuccess(eq(user));
+    }
+
+    @Test
+    public void signUp_DefaultSubscribe_OnError(){
+        loginViewPresenter.signUp(userEmail,userPassword);
+
+        verify(loginViewMock).setProgress(true);
+
+        verify(userSignUpUseCaseMock).execute(any(),UserSubscriberCaptor.capture());
 
         UserSubscriberCaptor.getValue().onError(e);
         verify(loginViewMock).setProgress(false);
@@ -128,7 +165,7 @@ public class LoginViewPresenterTest {
     }
 
     @Test
-    public void linkAccount_DefaultSubscribe_OnCompleted(){
+    public void resetPassword_DefaultSubscribe_OnCompleted(){
         loginViewPresenter.resetPassword(userEmail);
 
         verify(resetPasswordUseCaseMock).execute(any(),SubscriberCaptor.capture());
@@ -136,12 +173,12 @@ public class LoginViewPresenterTest {
         verify(loginViewMock).info(any());
     }
     @Test
-    public void linkAccount_DefaultSubscribe_onError(){
+    public void resetPassword_DefaultSubscribe_onError(){
         loginViewPresenter.resetPassword(userEmail);
 
         verify(resetPasswordUseCaseMock).execute(any(),SubscriberCaptor.capture());
         SubscriberCaptor.getValue().onError(e);
         verify(loginViewMock).error(any());
     }
-    
+
 }
