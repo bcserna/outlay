@@ -84,6 +84,7 @@ public class LoginViewPresenterTest {
         verify(loginViewMock).onSuccess(eq(user));
     }
 
+    @Test
     public void public_signIn_DefaultSubscribe_OnError(){
         loginViewPresenter.signIn(userEmail, userPassword);
 
