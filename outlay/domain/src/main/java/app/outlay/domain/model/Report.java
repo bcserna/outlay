@@ -57,6 +57,9 @@ public class Report {
     public BigDecimal getTotalAmount() {
         BigDecimal result = BigDecimal.ZERO;
 
+        if (expenses == null)
+            return result;
+
         for (Expense expense : expenses) {
             result = result.add(expense.getAmount());
         }
@@ -82,6 +85,9 @@ public class Report {
 
     public Map<Category, Report> groupByCategory() {
         Map<Category, Report> result = new LinkedHashMap<>();
+
+        if (expenses == null)
+            return result;
 
         for (Expense expense : expenses) {
             Category expenseCategory = expense.getCategory();
