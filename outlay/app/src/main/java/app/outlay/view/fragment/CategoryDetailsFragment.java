@@ -97,6 +97,8 @@ public class CategoryDetailsFragment extends BaseMvpFragment<CategoryDetailsView
                 break;
             default:
                 break;
+            default:
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
